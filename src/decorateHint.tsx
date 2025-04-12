@@ -3,9 +3,9 @@ export type Card = {
   hint?: string;
 };
 
-export function decorateHint(card: Card) {
+export function decorateHint(card: Card, asString = false) {
   if (!card.hint) {
-    return <></>;
+    return asString ? "" : <></>;
   }
 
   let frontToSearch = card.front.toLocaleLowerCase();
@@ -42,7 +42,9 @@ export function decorateHint(card: Card) {
     const decorated = card.hint.slice(decoratedStart, decoratedEnd);
     const after = card.hint.slice(decoratedEnd);
 
-    return (
+    return asString ? (
+      `${before}<b>${decorated}</b>${after}`
+    ) : (
       <>
         {before}
         <b>{decorated}</b>
@@ -51,5 +53,5 @@ export function decorateHint(card: Card) {
     );
   }
 
-  return <>{card.hint}</>;
+  return asString ? card.hint : <>{card.hint}</>;
 }
